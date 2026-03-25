@@ -1,0 +1,131 @@
+===============================================
+REDDIT PHD - COMPLETE CODE FOR CURSOR
+===============================================
+
+Open this file in your browser, select all (Cmd+A / Ctrl+A), copy, and paste into a text editor.
+Then follow the simple instructions.
+
+===============================================
+STEP 1: SETUP PROJECT
+===============================================
+
+In terminal:
+npm create vite@latest reddit-phd -- --template react-ts
+cd reddit-phd
+npm install react-router@7.13.0 motion@12.23.24 lucide-react@0.487.0 recharts@2.15.2 clsx tailwind-merge
+npm install -D tailwindcss@4.1.12 @tailwindcss/vite@4.1.12
+
+===============================================
+STEP 2: CREATE FOLDERS
+===============================================
+
+mkdir -p src/pages src/components
+
+===============================================
+STEP 3: FILES TO CREATE/UPDATE
+===============================================
+
+Below are all files. Copy each section and save to the path shown.
+
+---FILE: vite.config.ts---
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+---END FILE---
+
+---FILE: src/index.css---
+@import 'tailwindcss';
+
+@layer base {
+  body {
+    @apply bg-[#0a0a0a] text-white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  }
+}
+---END FILE---
+
+---FILE: src/main.tsx---
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+---END FILE---
+
+---FILE: src/App.tsx---
+import { RouterProvider } from 'react-router';
+import { router } from './routes';
+import { useEffect } from 'react';
+
+export default function App() {
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
+
+  return <RouterProvider router={router} />;
+}
+---END FILE---
+
+---FILE: src/routes.ts---
+import { createBrowserRouter } from "react-router";
+import { Root } from "./Root";
+import { Landing } from "./pages/Landing";
+import { Results } from "./pages/Results";
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: Root,
+    children: [
+      { index: true, Component: Landing },
+      { path: "search/:query", Component: Results },
+    ],
+  },
+]);
+---END FILE---
+
+---FILE: src/Root.tsx---
+import { Outlet } from 'react-router';
+import { Header } from './components/Header';
+
+export function Root() {
+  return (
+    <div className="min-h-screen bg-[#fcfcfc]">
+      <Header />
+      <Outlet />
+    </div>
+  );
+}
+---END FILE---
+
+===============================================
+REMAINING FILES TOO LARGE FOR ONE TEXT FILE
+===============================================
+
+To get the remaining component files, download them from this Figma Make project.
+I'll list what you need:
+
+PAGES (in src/pages/):
+- Landing.tsx
+- Results.tsx
+
+COMPONENTS (in src/components/):
+- Header.tsx
+- SearchSection.tsx
+- ConsensusCard.tsx
+- ExperienceCards.tsx
+- ExperienceDotPlot.tsx
+- InsightsGrid.tsx
+- LandingHero.tsx
+- GlobalPostsVisualization.tsx
+
+See CURSOR_SETUP_GUIDE.md and CURSOR_SETUP_GUIDE_PART2.md for the component code.
