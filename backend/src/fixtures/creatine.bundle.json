@@ -1,0 +1,384 @@
+{
+  "topic": {
+    "id": "topic:creatine",
+    "slug": "creatine",
+    "display_name": "Creatine",
+    "analyzed_unit_count": 12,
+    "analyzed_thread_count": 10,
+    "subreddit_count": 6
+  },
+  "consensus": {
+    "summary_text": "Across Reddit posts and comments about Creatine, experiences vary. People often mention heavier lifts / PRs and strength & power. Some posts also bring up water retention. On average, self-reported outcomes in this sample sit around 6.1/10 (51% confidence in that average). Interpret cautiously: this sample is still limited. This is community discussion, not medical advice.",
+    "expected_score": 6.1,
+    "confidence": 51,
+    "sample_size": 12
+  },
+  "sentiment": {
+    "positive_percent": 33.3,
+    "neutral_percent": 50,
+    "negative_percent": 16.7,
+    "sample_size": 12
+  },
+  "representative_posts": {
+    "positive": {
+      "id": "t3_p1",
+      "username": "lift_daily",
+      "excerpt": "I started 5g daily with plenty of water. Recovery between heavy squat sessions improved and I noticed measurable progress on compound lifts within three weeks. No loading phase. I would recommend it based on my experience.",
+      "url": "https://www.reddit.com/r/supplements/comments/p1/creatine_results/",
+      "timestamp_utc": "2024-07-03T09:46:40.000Z",
+      "score": 8.8,
+      "reddit_score": 210,
+      "subreddit": "supplements"
+    },
+    "negative": {
+      "id": "t3_p7",
+      "username": "SensitiveJoe",
+      "excerpt": "Caused severe bloating and stomach cramps for me. Tried different brands and timing but the digestive issues persisted. Also gained uncomfortable water weight in the first week. I stopped.",
+      "url": "https://www.reddit.com/r/bodybuilding/comments/p7/creatine_digestive/",
+      "timestamp_utc": "2024-04-24T23:06:40.000Z",
+      "score": 1.2,
+      "reddit_score": 40,
+      "subreddit": "bodybuilding"
+    }
+  },
+  "insights": {
+    "benefits": [
+      {
+        "name": "Heavier lifts / PRs",
+        "count": 8,
+        "percent_of_units": 66.7,
+        "thread_count": 8,
+        "confidence": "medium"
+      },
+      {
+        "name": "Strength & power",
+        "count": 6,
+        "percent_of_units": 50,
+        "thread_count": 6,
+        "confidence": "medium"
+      },
+      {
+        "name": "Recovery between sessions",
+        "count": 4,
+        "percent_of_units": 33.3,
+        "thread_count": 4,
+        "confidence": "low"
+      },
+      {
+        "name": "Endurance & conditioning",
+        "count": 3,
+        "percent_of_units": 25,
+        "thread_count": 3,
+        "confidence": "low"
+      },
+      {
+        "name": "Focus & cognition",
+        "count": 1,
+        "percent_of_units": 8.3,
+        "thread_count": 1,
+        "confidence": "low"
+      },
+      {
+        "name": "Sleep",
+        "count": 1,
+        "percent_of_units": 8.3,
+        "thread_count": 1,
+        "confidence": "low"
+      },
+      {
+        "name": "Adequate water intake",
+        "count": 1,
+        "percent_of_units": 8.3,
+        "thread_count": 1,
+        "confidence": "low"
+      }
+    ],
+    "side_effects": [
+      {
+        "name": "Water retention",
+        "count": 3,
+        "percent_of_units": 25,
+        "thread_count": 3,
+        "confidence": "low"
+      },
+      {
+        "name": "Cramping",
+        "count": 3,
+        "percent_of_units": 25,
+        "thread_count": 3,
+        "confidence": "low"
+      },
+      {
+        "name": "Digestive discomfort",
+        "count": 3,
+        "percent_of_units": 25,
+        "thread_count": 3,
+        "confidence": "low"
+      },
+      {
+        "name": "Bloating",
+        "count": 2,
+        "percent_of_units": 16.7,
+        "thread_count": 2,
+        "confidence": "low"
+      },
+      {
+        "name": "Acne / skin",
+        "count": 1,
+        "percent_of_units": 8.3,
+        "thread_count": 1,
+        "confidence": "low"
+      },
+      {
+        "name": "Hair shedding",
+        "count": 1,
+        "percent_of_units": 8.3,
+        "thread_count": 1,
+        "confidence": "low"
+      },
+      {
+        "name": "Headaches",
+        "count": 1,
+        "percent_of_units": 8.3,
+        "thread_count": 1,
+        "confidence": "low"
+      }
+    ],
+    "protocols": [
+      {
+        "name": "Daily consistency",
+        "count": 7,
+        "percent_of_units": 58.3
+      },
+      {
+        "name": "Daily dose (~3-5 g)",
+        "count": 6,
+        "percent_of_units": 50
+      },
+      {
+        "name": "Loading phase",
+        "count": 2,
+        "percent_of_units": 16.7
+      },
+      {
+        "name": "Post-workout timing",
+        "count": 2,
+        "percent_of_units": 16.7
+      },
+      {
+        "name": "Pre-workout timing",
+        "count": 1,
+        "percent_of_units": 8.3
+      }
+    ],
+    "stacks": [
+      {
+        "name": "With protein",
+        "count": 1,
+        "percent_of_units": 8.3
+      },
+      {
+        "name": "With beta-alanine",
+        "count": 1,
+        "percent_of_units": 8.3
+      },
+      {
+        "name": "Stacked supplements",
+        "count": 1,
+        "percent_of_units": 8.3
+      }
+    ]
+  },
+  "experience_posts": [
+    {
+      "id": "t1_c1",
+      "score": 6.7,
+      "username": "runner_mike",
+      "excerpt": "Same here - I felt endurance benefits for higher rep work. First-hand experience: 5g daily, no side effects worth mentioning.",
+      "url": "https://www.reddit.com/r/supplements/comments/p1/creatine_results/t1_c1/",
+      "timestamp_utc": "2024-07-03T09:55:00.000Z",
+      "age": null,
+      "sex": null,
+      "category": "positive",
+      "subreddit": "supplements"
+    },
+    {
+      "id": "t3_p1",
+      "score": 8.8,
+      "username": "lift_daily",
+      "excerpt": "I started 5g daily with plenty of water. Recovery between heavy squat sessions improved and I noticed measurable progress on compound lifts within three weeks. No loading phase. I would recommend it based on my experience.",
+      "url": "https://www.reddit.com/r/supplements/comments/p1/creatine_results/",
+      "timestamp_utc": "2024-07-03T09:46:40.000Z",
+      "age": null,
+      "sex": null,
+      "category": "positive",
+      "subreddit": "supplements"
+    },
+    {
+      "id": "t3_p2",
+      "score": 5.6,
+      "username": "bulk_or_cut",
+      "excerpt": "I gained a few pounds of water weight initially and had some bloating. It subsided after about two weeks while staying consistent with 5g creatine monohydrate. Strength still improved overall.",
+      "url": "https://www.reddit.com/r/bodybuilding/comments/p2/water_weight/",
+      "timestamp_utc": "2024-06-21T20:00:00.000Z",
+      "age": null,
+      "sex": null,
+      "category": "neutral",
+      "subreddit": "bodybuilding"
+    },
+    {
+      "id": "t1_c2",
+      "score": 3.5,
+      "username": "skeptic_lifter",
+      "excerpt": "I stopped after stomach cramps and discomfort persisted for weeks. Tried different brands. Not worth it for me personally - worst experience with a supplement so far.",
+      "url": "https://www.reddit.com/r/moreplatesmoredates/comments/p3/creatine_protocol/t1_c2/",
+      "timestamp_utc": "2024-06-10T06:33:20.000Z",
+      "age": null,
+      "sex": null,
+      "category": "negative",
+      "subreddit": "moreplatesmoredates"
+    },
+    {
+      "id": "t3_p3",
+      "score": 6.1,
+      "username": "biohack_novice",
+      "excerpt": "I tried taking it post workout and pre workout - what mattered most was daily consistency. I stack it with protein and beta alanine. Loading phase seemed unnecessary for me.",
+      "url": "https://www.reddit.com/r/moreplatesmoredates/comments/p3/creatine_protocol/",
+      "timestamp_utc": "2024-06-10T06:13:20.000Z",
+      "age": null,
+      "sex": null,
+      "category": "neutral",
+      "subreddit": "moreplatesmoredates"
+    },
+    {
+      "id": "t3_p4",
+      "score": 6.4,
+      "username": "focus_first",
+      "excerpt": "Mixed results - I noticed mild mental clarity on some days but nothing dramatic. I am 32 and take 5g daily. Sleep was unchanged. I would not call it a nootropic for me.",
+      "url": "https://www.reddit.com/r/nootropics/comments/p4/creatine_cognition/",
+      "timestamp_utc": "2024-05-29T16:26:40.000Z",
+      "age": 32,
+      "sex": null,
+      "category": "neutral",
+      "subreddit": "nootropics"
+    },
+    {
+      "id": "t3_p5",
+      "score": 6.3,
+      "username": "hydration_matters",
+      "excerpt": "When I drank enough water the muscle cramps went away. Creatine seems to work best for me with consistent hydration. Strength and recovery improved modestly - not magic, but helpful.",
+      "url": "https://www.reddit.com/r/biohackers/comments/p5/creatine_hydration/",
+      "timestamp_utc": "2024-05-18T02:40:00.000Z",
+      "age": null,
+      "sex": null,
+      "category": "neutral",
+      "subreddit": "biohackers"
+    },
+    {
+      "id": "t3_p6",
+      "score": 7.9,
+      "username": "female_lifter",
+      "excerpt": "I am 29 female and take 3-5g daily. Strength on lower body work improved and I had no hair loss or acne issues. Recovery felt better between leg days. I recommend trying it with realistic expectations.",
+      "url": "https://www.reddit.com/r/supplements/comments/p6/creatine_female/",
+      "timestamp_utc": "2024-05-06T12:53:20.000Z",
+      "age": 29,
+      "sex": "female",
+      "category": "positive",
+      "subreddit": "supplements"
+    },
+    {
+      "id": "t3_p7",
+      "score": 1.2,
+      "username": "SensitiveJoe",
+      "excerpt": "Caused severe bloating and stomach cramps for me. Tried different brands and timing but the digestive issues persisted. Also gained uncomfortable water weight in the first week. I stopped.",
+      "url": "https://www.reddit.com/r/bodybuilding/comments/p7/creatine_digestive/",
+      "timestamp_utc": "2024-04-24T23:06:40.000Z",
+      "age": null,
+      "sex": null,
+      "category": "negative",
+      "subreddit": "bodybuilding"
+    },
+    {
+      "id": "t3_p8",
+      "score": 5.9,
+      "username": "data_driven",
+      "excerpt": "I tracked bench and squat for 6 weeks. Small improvements in reps at the same RPE. Not huge, but measurable. Side effects were minimal - occasional headache if I skipped water.",
+      "url": "https://www.reddit.com/r/biohacking/comments/p8/creatine_tracking/",
+      "timestamp_utc": "2024-04-13T09:20:00.000Z",
+      "age": null,
+      "sex": null,
+      "category": "neutral",
+      "subreddit": "biohacking"
+    },
+    {
+      "id": "t3_p9",
+      "score": 8.3,
+      "username": "JohnMuscle",
+      "excerpt": "Started taking 5g daily after workouts. Within 3 weeks I was lifting noticeably more on compound movements. Recovery between sets improved. Zero side effects that mattered to me. I wish I had started sooner.",
+      "url": "https://www.reddit.com/r/supplements/comments/p9/long_term_creatine/",
+      "timestamp_utc": "2024-04-01T19:33:20.000Z",
+      "age": null,
+      "sex": null,
+      "category": "positive",
+      "subreddit": "supplements"
+    },
+    {
+      "id": "t3_p10",
+      "score": 6.4,
+      "username": "natural_lifter",
+      "excerpt": "Works for me for strength and some endurance. I had mild water retention early on but it went away. I take creatine monohydrate daily - consistent protocol mattered more than timing tricks.",
+      "url": "https://www.reddit.com/r/moreplatesmoredates/comments/p10/creatine_natural/",
+      "timestamp_utc": "2024-03-21T05:46:40.000Z",
+      "age": null,
+      "sex": null,
+      "category": "neutral",
+      "subreddit": "moreplatesmoredates"
+    }
+  ],
+  "distribution_stats": null,
+  "metric_eligibility": {
+    "consensus": {
+      "shown": true,
+      "sample_size": 12,
+      "reason_hidden": null
+    },
+    "sentiment": {
+      "shown": true,
+      "sample_size": 12,
+      "reason_hidden": null
+    },
+    "benefits": {
+      "shown": true,
+      "sample_size": 12,
+      "reason_hidden": null
+    },
+    "side_effects": {
+      "shown": true,
+      "sample_size": 12,
+      "reason_hidden": null
+    },
+    "protocols": {
+      "shown": true,
+      "sample_size": 12,
+      "reason_hidden": null
+    },
+    "stacks": {
+      "shown": true,
+      "sample_size": 12,
+      "reason_hidden": null
+    },
+    "distribution_stats": {
+      "shown": false,
+      "sample_size": 12,
+      "reason_hidden": "Hidden until the sample is large enough for stable bucket stats"
+    }
+  },
+  "experience_score_definition": "Per-post 0-10 self-reported experience quality for this topic. Categories: below 4.5 clearly poor, 4.5 to under 6.5 mixed or modest, 6.5 and up clearly positive. Independent of Reddit vote totals.",
+  "low_data_warning": "Thin sample (12 quality-filtered posts/comments) - patterns are directional only.",
+  "data_quality": {
+    "sample_strength": "low",
+    "retrieval_mode": "replay",
+    "scoring_version": "heuristic-v2.1",
+    "taxonomy_version": "lexicon-v2.1"
+  }
+}

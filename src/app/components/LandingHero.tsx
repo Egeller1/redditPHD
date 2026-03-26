@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { GlobalPostsVisualization } from './GlobalPostsVisualization';
 import { User } from 'lucide-react';
+import { queryParamToSlug } from '@/lib/slug';
 
 const trendingSearches = [
   { 
@@ -75,7 +76,8 @@ export function LandingHero() {
   const currentSearch = trendingSearches[currentIndex];
 
   const handleExplore = () => {
-    navigate(`/search/${currentSearch.term.toLowerCase()}`);
+    const slug = queryParamToSlug(currentSearch.term);
+    if (slug) navigate(`/search/${slug}`);
   };
 
   return (

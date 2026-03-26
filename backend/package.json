@@ -1,0 +1,26 @@
+{
+  "name": "reddit-phd-backend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "emit:bundle": "CORPUS_DISABLED=1 REDDIT_MODE=replay tsx scripts/emit-bundle.ts",
+    "verify:quality": "CORPUS_DISABLED=1 REDDIT_MODE=replay tsx scripts/verify-quality.ts",
+    "demo:sample-growth": "tsx scripts/sample-growth-demo.ts",
+    "test:http": "tsx scripts/test-http-endpoints.ts",
+    "compare:creatine-payloads": "tsx scripts/compare-creatine-payloads.ts",
+    "diagnose:topics": "tsx scripts/topic-availability.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.0",
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
