@@ -18,7 +18,7 @@ export function InsightsGrid({ bundle }: { bundle: TopicBundle }) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-      <div className="bg-[#111111] rounded-xl p-8 border border-[#1f1f1f]">
+      <div className="bg-[#0f1612] rounded-xl p-8 border border-[#1e2d1f]">
         <div className="mb-7 flex items-center gap-2">
           <h3 className="text-[13px] font-semibold text-[#6366f1] uppercase tracking-[0.05em]">Benefits Reported</h3>
           <div className="flex-1 h-px bg-gradient-to-r from-[#6366f1]/20 to-transparent"></div>
@@ -31,7 +31,7 @@ export function InsightsGrid({ bundle }: { bundle: TopicBundle }) {
                   <span className="text-[14px] text-[#d1d1d1] font-medium">{benefit.name}</span>
                   <span className="text-[13px] text-[#a1a1a1] font-medium">{benefit.count}</span>
                 </div>
-                <div className="w-full bg-[#1f1f1f] rounded-full h-[6px] overflow-hidden">
+                <div className="w-full bg-[#1e2d1f] rounded-full h-[6px] overflow-hidden">
                   <div
                     className="bg-gradient-to-r from-[#6366f1] to-[#818cf8] h-full rounded-full transition-all duration-700"
                     style={{ width: `${(benefit.percent_of_units / maxBenPct) * 100}%` }}
@@ -48,7 +48,7 @@ export function InsightsGrid({ bundle }: { bundle: TopicBundle }) {
         )}
       </div>
 
-      <div className="bg-[#111111] rounded-xl p-8 border border-[#1f1f1f]">
+      <div className="bg-[#0f1612] rounded-xl p-8 border border-[#1e2d1f]">
         <div className="mb-7 flex items-center gap-2">
           <h3 className="text-[13px] font-semibold text-[#f97316] uppercase tracking-[0.05em]">Side Effects Reported</h3>
           <div className="flex-1 h-px bg-gradient-to-r from-[#f97316]/20 to-transparent"></div>
@@ -61,7 +61,7 @@ export function InsightsGrid({ bundle }: { bundle: TopicBundle }) {
                   <span className="text-[14px] text-[#d1d1d1] font-medium">{effect.name}</span>
                   <span className="text-[13px] text-[#a1a1a1] font-medium">{effect.count}</span>
                 </div>
-                <div className="w-full bg-[#1f1f1f] rounded-full h-[6px] overflow-hidden">
+                <div className="w-full bg-[#1e2d1f] rounded-full h-[6px] overflow-hidden">
                   <div
                     className="bg-gradient-to-r from-[#f97316] to-[#fb923c] h-full rounded-full transition-all duration-700"
                     style={{ width: `${(effect.percent_of_units / maxSePct) * 100}%` }}
@@ -78,10 +78,10 @@ export function InsightsGrid({ bundle }: { bundle: TopicBundle }) {
         )}
       </div>
 
-      <div className="bg-[#111111] rounded-xl p-8 border border-[#1f1f1f]">
+      <div className="bg-[#0f1612] rounded-xl p-8 border border-[#1e2d1f]">
         <div className="mb-7 flex items-center gap-2">
-          <h3 className="text-[13px] font-semibold text-[#a78bfa] uppercase tracking-[0.05em]">Protocols Mentioned</h3>
-          <div className="flex-1 h-px bg-gradient-to-r from-[#a78bfa]/20 to-transparent"></div>
+          <h3 className="text-[13px] font-semibold text-[#5eead4] uppercase tracking-[0.05em]">Protocols Mentioned</h3>
+          <div className="flex-1 h-px bg-gradient-to-r from-[#5eead4]/20 to-transparent"></div>
         </div>
         {protocolsOk ? (
           <div className="space-y-6">
@@ -91,9 +91,9 @@ export function InsightsGrid({ bundle }: { bundle: TopicBundle }) {
                   <span className="text-[14px] text-[#d1d1d1] font-medium">{protocol.name}</span>
                   <span className="text-[13px] text-[#a1a1a1] font-medium">{protocol.count}</span>
                 </div>
-                <div className="w-full bg-[#1f1f1f] rounded-full h-[6px] overflow-hidden">
+                <div className="w-full bg-[#1e2d1f] rounded-full h-[6px] overflow-hidden">
                   <div
-                    className="bg-gradient-to-r from-[#a78bfa] to-[#c4b5fd] h-full rounded-full transition-all duration-700"
+                    className="bg-gradient-to-r from-[#5eead4] to-[#c4b5fd] h-full rounded-full transition-all duration-700"
                     style={{ width: `${(protocol.percent_of_units / maxProtocolPct) * 100}%` }}
                   />
                 </div>
@@ -106,7 +106,7 @@ export function InsightsGrid({ bundle }: { bundle: TopicBundle }) {
         )}
       </div>
 
-      <div className="bg-[#111111] rounded-xl p-8 border border-[#1f1f1f]">
+      <div className="bg-[#0f1612] rounded-xl p-8 border border-[#1e2d1f]">
         <div className="mb-7 flex items-center gap-2">
           <h3 className="text-[13px] font-semibold text-[#22c55e] uppercase tracking-[0.05em]">Stacks Mentioned</h3>
           <div className="flex-1 h-px bg-gradient-to-r from-[#22c55e]/20 to-transparent"></div>
@@ -119,7 +119,7 @@ export function InsightsGrid({ bundle }: { bundle: TopicBundle }) {
                   <span className="text-[14px] text-[#d1d1d1] font-medium">{stack.name}</span>
                   <span className="text-[13px] text-[#a1a1a1] font-medium">{stack.count}</span>
                 </div>
-                <div className="w-full bg-[#1f1f1f] rounded-full h-[6px] overflow-hidden">
+                <div className="w-full bg-[#1e2d1f] rounded-full h-[6px] overflow-hidden">
                   <div
                     className="bg-gradient-to-r from-[#22c55e] to-[#4ade80] h-full rounded-full transition-all duration-700"
                     style={{ width: `${(stack.percent_of_units / maxStackPct) * 100}%` }}

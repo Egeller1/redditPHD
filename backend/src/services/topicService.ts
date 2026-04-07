@@ -1,16 +1,17 @@
-import type { TopicBundle, PersonalizeRequest, PersonalizeResponse } from '../types/topicBundle.js';
+import type { TopicBundle, PersonalizeRequest, PersonalizeResponse, ConsensusBlock, PersonalizedRecommendation } from '../types/topicBundle.js';
 import type { CorpusProvenance, CorpusEntry, MergeCorpusStats } from '../corpus/topicCorpus.js';
 import type { CorpusRetrievalMode } from '../corpus/topicCorpus.js';
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { expandQueryVariants, slugToDisplayName } from '../pipeline/query/resolveTopic.js';
+import { correctSlug, expandQueryVariants, slugToDisplayName } from '../pipeline/query/resolveTopic.js';
 import { filterRawUnits } from '../pipeline/filters/filterUnits.js';
 import { dedupeRawUnitsFull } from '../pipeline/filters/dedupe.js';
 import { buildExperienceUnits } from '../pipeline/units/buildExperienceUnits.js';
 import { printTaxonomyDiagnostics } from '../pipeline/extraction/taxonomyDiagnostics.js';
 import { HeuristicScorer } from '../pipeline/scoring/heuristicScorer.js';
 import { buildTopicBundle } from '../pipeline/bundle/buildTopicBundle.js';
+import { computeConfidence } from '../pipeline/consensus/buildConsensus.js';
 import { buildDataQuality } from '../pipeline/bundle/dataQuality.js';
 import { loadReplayFixture } from '../pipeline/reddit/replayLoader.js';
 import { retrieveLiveCandidatesDetailed, type LiveSearchDiagnostics } from '../pipeline/reddit/liveSearch.js';
@@ -187,7 +188,7 @@ export function runPipelineFromRaw(
 ): TopicBundle {
   const scorer = new HeuristicScorer();
   const preFilter = raw.length;
-  let units = filterRawUnits(raw);
+  let units = filterRawUnits(raw, expandQueryVariants(slug));
   const postFilter = units.length;
   units = dedupeRawUnitsFull(units);
   const postDedupe = units.length;
@@ -341,7 +342,7 @@ export async function getTopicBySlugWithDiagnostics(slug: string): Promise<{
   bundle: TopicBundle | null;
   diagnostics: TopicResolutionDiagnostics;
 }> {
-  const normalized = slug.trim().toLowerCase();
+  const normalized = correctSlug(slug.trim().toLowerCase());
   const displayName = slugToDisplayName(normalized);
   const currentMode = mode();
   const diag = emptyDiag(normalized);
@@ -439,13 +440,124 @@ export async function getTopicBySlug(slug: string): Promise<TopicBundle | null> 
   return out.bundle;
 }
 
+function demoLabel(age: number | null, sex: string | null): string {
+  const sexStr = sex === 'male' ? 'men' : sex === 'female' ? 'women' : null;
+  if (age && sexStr) {
+    const decade = Math.floor(age / 10) * 10;
+    return `${sexStr} in their ${decade}s`;
+  }
+  if (age) return `people in their ${Math.floor(age / 10) * 10}s`;
+  if (sexStr) return sexStr;
+  return 'people like you';
+}
+
+function buildRecommendation(
+  topicDisplay: string,
+  expected: number,
+  bundle: TopicBundle,
+  label: string
+): PersonalizedRecommendation {
+  const topBenefits = bundle.insights.benefits
+    .slice(0, 2)
+    .map((b) => b.name.charAt(0).toLowerCase() + b.name.slice(1));
+  const topSide = bundle.insights.side_effects[0]?.name.toLowerCase() ?? null;
+  const benefitStr = topBenefits.join(' and ');
+
+  let headline: string;
+  let blurb: string;
+
+  if (expected >= 7.0) {
+    headline = `We strongly recommend ${topicDisplay} for ${label}.`;
+    blurb = benefitStr
+      ? `The data shows consistently strong ${benefitStr} improvements in people with your profile. Worth a dedicated trial.`
+      : `The data shows consistently strong results in people with your profile. Worth a dedicated trial.`;
+  } else if (expected >= 5.5) {
+    headline = `We recommend trying ${topicDisplay}.`;
+    blurb = benefitStr
+      ? `People like you commonly report ${benefitStr} benefits. Give it a focused 3–4 week trial to see how you respond.`
+      : `People like you report moderate benefits. Give it a focused 3–4 week trial to see how you respond.`;
+  } else if (expected >= 4.5) {
+    headline = `We cautiously recommend ${topicDisplay} — outcomes are mixed.`;
+    blurb = topSide
+      ? `Some people in your profile benefit, others don't notice much. Watch for ${topSide} and reassess after 3 weeks.`
+      : `Some people in your profile benefit, others don't notice much. Keep expectations measured and reassess after 3 weeks.`;
+  } else {
+    headline = `We do not recommend ${topicDisplay} for ${label}.`;
+    blurb = topSide
+      ? `People with your profile frequently report ${topSide} and disappointing results. Consider alternatives.`
+      : `People with your profile frequently report disappointing results. Consider alternatives.`;
+  }
+
+  return { headline, blurb };
+}
+
+function personalizedSummaryText(topicDisplay: string, expected: number, bundle: TopicBundle): string {
+  const topBenefits = bundle.insights.benefits
+    .slice(0, 2)
+    .map((b) => b.name.charAt(0).toLowerCase() + b.name.slice(1));
+  const benefitStr = topBenefits.join(' and ');
+
+  if (expected >= 7.0) {
+    return benefitStr
+      ? `People like you report real improvements in ${benefitStr} from ${topicDisplay}.`
+      : `People like you report solid results from ${topicDisplay}.`;
+  } else if (expected >= 5.5) {
+    return benefitStr
+      ? `People like you can expect noticeable ${benefitStr} benefits from ${topicDisplay}.`
+      : `People like you can expect moderate results from ${topicDisplay}.`;
+  } else if (expected >= 4.5) {
+    return benefitStr
+      ? `People like you report mixed outcomes — some notice ${benefitStr} improvements, others don't.`
+      : `People like you report mixed outcomes with ${topicDisplay}.`;
+  } else {
+    return `People like you often report a difficult experience with ${topicDisplay}.`;
+  }
+}
+
 export function personalizeTopic(
   bundle: TopicBundle,
-  _body: PersonalizeRequest
+  body: PersonalizeRequest
 ): PersonalizeResponse {
+  const { age, sex } = body;
+
+  // No demographic input → return unchanged, no note
+  if (age === null && sex === null) {
+    return { consensus: { ...bundle.consensus }, personalization_note: null, recommendation: null };
+  }
+
+  const label = demoLabel(age, sex);
+
+  // Filter to posts that have at least one demographic field and match the user
+  const matched = bundle.experience_posts.filter((p) => {
+    if (p.age === null && p.sex === null) return false;
+    const sexOk = !sex || !p.sex || p.sex === sex;
+    const ageOk = !age || !p.age || Math.abs(p.age - age) <= 10;
+    return sexOk && ageOk;
+  });
+
+  if (matched.length < 8) {
+    return {
+      consensus: { ...bundle.consensus },
+      personalization_note: `Not enough posts from ${label} to personalize (${matched.length} matched out of ${bundle.consensus.sample_size}) — showing overall results.`,
+      recommendation: null,
+    };
+  }
+
+  const scores = matched.map((p) => p.score);
+  const expected = Math.round((scores.reduce((a, b) => a + b, 0) / scores.length) * 10) / 10;
+  const confidence = computeConfidence(scores);
+
+  const personalizedConsensus: ConsensusBlock = {
+    ...bundle.consensus,
+    expected_score: expected,
+    confidence,
+    sample_size: matched.length,
+    summary_text: personalizedSummaryText(bundle.topic.display_name, expected, bundle),
+  };
+
   return {
-    consensus: { ...bundle.consensus },
-    personalization_note:
-      'v1: age/sex are not applied to scoring; Reddit rarely provides them. No profile-aware model is enabled.',
+    consensus: personalizedConsensus,
+    personalization_note: `Based on ${matched.length} posts from ${label} in this dataset.`,
+    recommendation: buildRecommendation(bundle.topic.display_name, expected, bundle, label),
   };
 }

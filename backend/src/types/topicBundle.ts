@@ -155,7 +155,13 @@ export interface PersonalizeRequest {
   sex: SexValue | null;
 }
 
+export interface PersonalizedRecommendation {
+  headline: string;
+  blurb: string;
+}
+
 export interface PersonalizeResponse {
   consensus: ConsensusBlock;
   personalization_note: string | null;
+  recommendation: PersonalizedRecommendation | null;
 }

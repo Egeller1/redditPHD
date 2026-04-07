@@ -18,23 +18,23 @@ export const SAMPLING = {
   targetAnalyzedUnitCount: intEnv('TARGET_ANALYZED_UNITS', 60),
 
   /** Stop live subreddit search after this many distinct posts (across all subs + query variants). */
-  maxCandidatePostsPerRun: intEnv('MAX_CANDIDATE_POSTS_PER_RUN', 200),
+  maxCandidatePostsPerRun: intEnv('MAX_CANDIDATE_POSTS_PER_RUN', 350),
 
   /** Additional cap on distinct threads (post `threadId`) collected in one live run. */
-  maxThreadsExpandPerRun: intEnv('MAX_THREADS_EXPAND_PER_RUN', 120),
+  maxThreadsExpandPerRun: intEnv('MAX_THREADS_EXPAND_PER_RUN', 200),
 
   /** After filter + dedupe, at most this many raw units feed scoring for a single response. */
-  maxUsableUnitsPerRun: intEnv('MAX_USABLE_UNITS_PER_RUN', 350),
+  maxUsableUnitsPerRun: intEnv('MAX_USABLE_UNITS_PER_RUN', 500),
 
   maxCorpusEntries: intEnv('MAX_CORPUS_ENTRIES', 6000),
 
   /** Reddit `limit` per search request (max 100). */
   redditSearchLimitPerRequest: Math.min(
     100,
-    Math.max(5, intEnv('REDDIT_SEARCH_LIMIT', 55))
+    Math.max(5, intEnv('REDDIT_SEARCH_LIMIT', 100))
   ),
 
-  liveRequestDelayMs: Math.max(200, intEnv('LIVE_REQUEST_DELAY_MS', 1100)),
+  liveRequestDelayMs: Math.max(200, intEnv('LIVE_REQUEST_DELAY_MS', 400)),
 
   sampleStrengthLowBelow: intEnv('SAMPLE_STRENGTH_LOW_BELOW', 15),
   sampleStrengthMediumBelow: intEnv('SAMPLE_STRENGTH_MEDIUM_BELOW', 45),

@@ -127,6 +127,12 @@ export const POSITIVE_SENTIMENT_TERMS = [
   'worth it',
   'happy with',
   'positive experience',
+  'like the',
+  'enjoy',
+  'love it',
+  'works for me',
+  'good results',
+  'really helped',
 ];
 
 export const NEGATIVE_SENTIMENT_TERMS = [
@@ -142,4 +148,13 @@ export const NEGATIVE_SENTIMENT_TERMS = [
   'severe bloating',
   'severe cramps',
   'unbearable',
+  'get insomnia',
+  'getting insomnia',
+  'gives me a headache',
+  'gives me headaches',
+  'caused insomnia',
+  'get headaches',
+  'got a headache',
+  'side effects are',
+  'experiencing side effects',
 ];

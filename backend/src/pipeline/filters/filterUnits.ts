@@ -15,10 +15,14 @@ export function isDeletedOrRemoved(unit: RawRedditUnit): boolean {
   return REMOVED.has(b) || unit.author === null || isBotOrDeletedAuthor(unit.author);
 }
 
-export function filterRawUnits(units: RawRedditUnit[]): RawRedditUnit[] {
+export function filterRawUnits(units: RawRedditUnit[], topicKeywords?: string[]): RawRedditUnit[] {
   return units.filter((u) => {
     if (isDeletedOrRemoved(u)) return false;
     if (bodyIsLowValue(u.body)) return false;
+    if (topicKeywords?.length) {
+      const haystack = `${u.title ?? ''} ${u.body}`.toLowerCase();
+      if (!topicKeywords.some((kw) => haystack.includes(kw.toLowerCase()))) return false;
+    }
     return true;
   });
 }

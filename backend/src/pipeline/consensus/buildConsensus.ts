@@ -8,6 +8,47 @@ function themeInSentence(name: string): string {
   return name.charAt(0).toLowerCase() + name.slice(1);
 }
 
+function buildSummaryText(
+  topicDisplay: string,
+  expected: number,
+  n: number,
+  topBenefits: string[],
+  topSides: string[],
+  thresholdMin: number
+): string {
+  const benefitStr = topBenefits.join(' and ');
+  const sideStr = topSides[0] ?? null;
+  const limitedSample = n < thresholdMin;
+
+  let line1: string;
+  let line2: string;
+
+  if (expected >= 7.0) {
+    line1 = benefitStr
+      ? `You can expect real improvements in ${benefitStr} from ${topicDisplay}.`
+      : `You can expect solid results from ${topicDisplay}.`;
+    line2 = '';
+  } else if (expected >= 5.5) {
+    line1 = benefitStr
+      ? `You can expect noticeable ${benefitStr} benefits from ${topicDisplay}.`
+      : `You can expect moderate results from ${topicDisplay}.`;
+    line2 = '';
+  } else if (expected >= 4.5) {
+    line1 = benefitStr
+      ? `You might notice some ${benefitStr} improvements, but outcomes are mixed.`
+      : `Outcomes are mixed — some people benefit, others don't notice much.`;
+    line2 = '';
+  } else {
+    line1 = sideStr
+      ? `Most people report a difficult experience with ${topicDisplay} — ${sideStr} is common.`
+      : `Most people report disappointing results with ${topicDisplay}.`;
+    line2 = benefitStr ? `Some notice minor ${benefitStr} benefits.` : '';
+  }
+
+  const caution = limitedSample ? ' Limited sample — treat as directional.' : '';
+  return [line1 + (line2 ? ' ' + line2 : '') + caution].join('');
+}
+
 function variance(nums: number[]): number {
   if (nums.length === 0) return 0;
   const m = nums.reduce((a, b) => a + b, 0) / nums.length;
@@ -53,19 +94,14 @@ export function buildConsensus(
   if (n === 0) {
     summary_text = `We didn’t find enough readable discussions about ${topicDisplay} in the selected communities to summarize yet.`;
   } else {
-    const themeParts: string[] = [];
-    if (topBenefits.length) {
-      themeParts.push(`People often mention ${topBenefits.join(' and ')}.`);
-    }
-    if (topSides.length) {
-      themeParts.push(`Some posts also bring up ${topSides[0]}.`);
-    }
-    const themeBlock = themeParts.length ? ` ${themeParts.join(' ')}` : '';
-    const caveat =
-      n < THRESHOLDS.strongSampleMinUnits
-        ? ' Interpret cautiously: this sample is still limited.'
-        : '';
-    summary_text = `Across Reddit posts and comments about ${topicDisplay}, experiences vary.${themeBlock} On average, self-reported outcomes in this sample sit around ${expected}/10 (${confidence}% confidence in that average).${caveat} This is community discussion, not medical advice.`;
+    summary_text = buildSummaryText(
+      topicDisplay,
+      expected,
+      n,
+      topBenefits,
+      topSides,
+      THRESHOLDS.strongSampleMinUnits
+    );
   }
 
   return {

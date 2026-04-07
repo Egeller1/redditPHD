@@ -20,7 +20,9 @@ function fullText(unit: RawRedditUnit): string {
 function isExploratoryOrUnderpoweredPositive(text: string): boolean {
   const t = text.toLowerCase();
   if (/\b(any|does anyone|thoughts on|worth trying)\b.*\?/i.test(t)) return true;
+  if (/\b(should i|has anyone|anyone tried|is it worth|anyone else experience)\b.*\?/i.test(t)) return true;
   if (/\bmixed results\b|\bnothing dramatic\b|\bsubtle\b|\bmild\b|\bnot sure\b/i.test(t)) return true;
+  if (/\bconflicting\b|\bconflicted\b/i.test(t)) return true;
   if (/\bcognitive\b|\bnootropic\b/i.test(t) && /\b(mixed|subtle|mild|unclear|question)\b/i.test(t))
     return true;
   return false;
@@ -62,6 +64,49 @@ function mildFirstHandBenefitBoost(text: string, extraction: StructuredExtractio
     return 0.35;
   }
   return 0;
+}
+
+function hasConcessionSideEffectPattern(text: string, extraction: StructuredExtraction): boolean {
+  if (extraction.sideEffectMentions.length < 1) return false;
+  return /\b(like|enjoy|love|works?|great|good|effective|noticed)\b.{1,80}\bbut\b.{1,80}(headache|insomnia|nausea|anxiety|cramp|bloat|stomach|dizzy)/i.test(
+    text
+  );
+}
+
+function isHelpSeekingForSideEffects(text: string, extraction: StructuredExtraction): boolean {
+  if (extraction.sideEffectMentions.length < 1) return false;
+  return /\b(did anyone|anyone else|how do (i|you)|any way to|how to (deal|avoid|stop|fix|reduce)|get around the|workaround for)\b/i.test(
+    text
+  );
+}
+
+/**
+ * Post is asking for advice / opinions without reporting a personal outcome.
+ * These posts add noise — they should score near 5.0 (neutral/unknown), not 5.5+.
+ */
+function isPureInquiry(text: string, extraction: StructuredExtraction): boolean {
+  // Must have a question mark — pure statements don't count
+  if (!text.includes('?')) return false;
+  // Already detected as hearsay — won't be boosted anyway
+  if (extraction.hearsay) return false;
+
+  // Explicit "I haven't used this" signals
+  if (/\b(never really use|never used|haven'?t tried|have not tried|never taken|haven'?t taken|never take|don'?t currently take|not currently taking|thinking of (starting|trying)|considering (taking|trying|starting))\b/i.test(text))
+    return true;
+
+  // Direct benefit-inquiry patterns (person asking if it's worth it)
+  if (/\b(is there any benefit to (taking|using)|any benefit (to|of) taking|worth taking|worth (trying|using)|should i (take|try|start|use)|is it worth (taking|trying|using)|would (it|this) be worth|benefit of taking|any point (in|to) taking)\b/i.test(text))
+    return true;
+
+  // Comparative / hypothetical questions ("can X give the same benefits as Y?")
+  if (/\b(can .{1,40} (give|provide|offer|have|get) the same (benefits?|effects?|results?)|same (benefits?|effects?|results?) as|equivalent to .{1,40}\?|substitute for .{1,40}\?|replace .{1,40} with|work the same as)\b/i.test(text))
+    return true;
+
+  // "I want to know / I'm wondering / I'm curious" with no firsthand claim
+  if (!extraction.firstHand && /\b(i'?m? (wondering|curious|not sure|trying to (figure out|understand|decide))|want to know|want to understand|looking for (opinions?|thoughts?|advice|recommendations?))\b/i.test(text))
+    return true;
+
+  return false;
 }
 
 export class HeuristicScorer implements Scorer {
@@ -134,6 +179,22 @@ export class HeuristicScorer implements Scorer {
         /\b(mild|subtle|nothing dramatic|unchanged|unclear)\b/i.test(t));
     if (exploratoryOrNonEndorsement && !hasStrongPositiveOutcome(text)) {
       s = Math.min(s, 6.4);
+    }
+
+    // "I like X but [side effect]" concession → keep out of clearly-positive band
+    if (hasConcessionSideEffectPattern(text, extraction) && extraction.stance === 'positive') {
+      s = Math.min(s, 6.2);
+    }
+
+    // Help-seeking post about a side effect → never in clearly-positive band
+    if (isHelpSeekingForSideEffects(text, extraction)) {
+      s = Math.min(s, 5.9);
+      if (extraction.sideEffectMentions.length >= 2) s = Math.min(s, 5.4);
+    }
+
+    // Pure inquiry / "should I try this?" posts with no reported outcome → neutral cap
+    if (isPureInquiry(text, extraction)) {
+      s = Math.min(s, 5.0);
     }
 
     s = Math.max(0, Math.min(10, s));
